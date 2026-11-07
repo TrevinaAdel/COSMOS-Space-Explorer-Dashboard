@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COSMOS - Space Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+   
+    <link rel="stylesheet" href="style (2).css" />
+  </head>
+  <body>
+
+    <aside id="sidebar" class="sidebar">
+      <div class="brand">
+        <div class="brand-logo"><i class="fas fa-rocket"></i></div>
+        <div>
+          <h1 class="brand-name grad-text">COSMOS</h1>
+          <p class="muted xs">Space Dashboard</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#" class="nav-link active" data-section="today-in-space">
+          <i class="fas fa-image"></i><span>Today in Space</span>
+        </a>
+        <a href="#" class="nav-link" data-section="launches">
+          <i class="fas fa-rocket"></i><span>Launches</span>
+        </a>
+        <a href="#" class="nav-link" data-section="planets">
+          <i class="fas fa-globe"></i><span>Planets</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="user">
+          <div class="avatar"><i class="fas fa-user"></i></div>
+          <div class="user-text">
+            <p class="user-name">Space Explorer</p>
+            <p class="muted xs">explorer@cosmos.space</p>
+          </div>
+          <i class="fas fa-ellipsis-v muted"></i>
+        </div>
+      </div>
+    </aside>
+    <div id="overlay" class="overlay"></div>
+
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button id="sidebar-toggle" class="menu-btn" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div>
+          <h2 class="topbar-title grad-text">Space Explorer Dashboard</h2>
+          <p class="muted xs hide-sm">Real-time space data from NASA &amp; SpaceDevs</p>
+        </div>
+      </div>
+      <div class="status-pill">
+        <span class="live"><span class="live-dot"></span><span class="hide-sm">Live Data</span></span>
+        <span class="sep hide-sm"></span>
+        <span class="stat"><i class="fas fa-globe c-blue"></i><b id="planets-count">8</b><span class="hide-sm"> Planets</span></span>
+        <span class="sep hide-sm"></span>
+        <span class="stat"><i class="fas fa-rocket c-purple"></i><b id="launches-count">10</b><span class="hide-sm"> Launches</span></span>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <section id="today-in-space" class="app-section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Today in Space</h2>
+            <p id="apod-date" class="muted sm">Astronomy Picture of the Day</p>
+          </div>
+          <div class="controls">
+            <input type="date" id="apod-date-input" class="date-input" min="1995-06-16" />
+            <button id="load-date-btn" class="btn-primary"><i class="fas fa-search"></i><span class="hide-sm"> Load</span></button>
+            <button id="today-apod-btn" class="btn-secondary">Today</button>
+          </div>
+        </div>
+
+        <div class="apod-grid">
+          <div id="apod-image-container" class="apod-media">
+            <div id="apod-loading" class="state">
+              <i class="fas fa-spinner fa-spin"></i>
+              <p>Loading today's image...</p>
+            </div>
+            <img id="apod-image" class="apod-img hidden" alt="Astronomy Picture of the Day" />
+            <div class="apod-overlay">
+              <button id="apod-hd-btn" class="overlay-btn"><i class="fas fa-expand"></i> View Full Resolution</button>
+            </div>
+          </div>
+
+          <div class="apod-side">
+            <div class="card">
+              <h3 id="apod-title" class="card-title">Loading...</h3>
+              <p class="muted sm mb"><span id="apod-date-detail"></span></p>
+              <p id="apod-explanation" class="text-body"></p>
+              <p id="apod-copyright" class="muted xs italic hidden"></p>
+            </div>
+            <div class="card">
+              <h4 class="card-h"><i class="fas fa-info-circle c-blue"></i> Image Details</h4>
+              <div class="kv"><span>Date</span><b id="apod-date-info">-</b></div>
+              <div class="kv"><span>Media Type</span><b id="apod-media-type">-</b></div>
+              <div class="kv"><span>Source</span><b>NASA APOD</b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    
+      <section id="launches" class="app-section hidden">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title big">Upcoming Launches</h2>
+            <p class="muted">Real-time tracking of the next missions to space</p>
+          </div>
+        </div>
+        <div id="featured-launch" class="featured-wrap"></div>
+        <h3 class="sub-title">All Upcoming Launches</h3>
+        <div id="launches-grid" class="launch-grid"></div>
+      </section>
+
+      <section id="planets" class="app-section hidden">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Explore Our Solar System</h2>
+            <p class="muted sm">Discover the planets, moons, and celestial bodies in our cosmic neighborhood</p>
+          </div>
+        </div>
+
+        <div id="planet-status" class="notice hidden"></div>
+        <div id="planets-grid" class="planet-strip"></div>
+
+        <div class="planet-layout">
+          <div class="card planet-main">
+            <div class="planet-top">
+              <div id="planet-orb" class="planet-orb-wrap"></div>
+              <div class="planet-intro">
+                <div class="planet-title-row">
+                  <div>
+                    <h3 id="planet-detail-name" class="planet-name">Earth</h3>
+                    <span id="planet-type-badge" class="type-badge"></span>
+                  </div>
+                  <button class="icon-btn" data-fav><i class="far fa-heart"></i></button>
+                </div>
+                <p id="planet-detail-description" class="text-body"></p>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-box"><p><i class="fas fa-ruler"></i> Semimajor Axis</p><b id="planet-distance">-</b></div>
+              <div class="stat-box"><p><i class="fas fa-circle"></i> Mean Radius</p><b id="planet-radius">-</b></div>
+              <div class="stat-box"><p><i class="fas fa-weight-hanging"></i> Mass</p><b id="planet-mass">-</b></div>
+              <div class="stat-box"><p><i class="fas fa-compress"></i> Density</p><b id="planet-density">-</b></div>
+              <div class="stat-box"><p><i class="fas fa-sync-alt"></i> Orbital Period</p><b id="planet-orbital-period">-</b></div>
+              <div class="stat-box"><p><i class="fas fa-redo"></i> Rotation Period</p><b id="planet-rotation">-</b></div>
+              <div class="stat-box"><p><i class="fas fa-moon"></i> Moons</p><b id="planet-moons">-</b></div>
+              <div class="stat-box"><p><i class="fas fa-arrows-alt-v"></i> Gravity</p><b id="planet-gravity">-</b></div>
+            </div>
+          </div>
+
+          <div class="planet-side">
+            <div class="card">
+              <h4 class="card-h"><i class="fas fa-user-astronaut c-purple"></i> Discovery Info</h4>
+              <div class="kv line"><span>Discovered By</span><b id="planet-discoverer">-</b></div>
+              <div class="kv line"><span>Discovery Date</span><b id="planet-discovery-date">-</b></div>
+              <div class="kv line"><span>Body Type</span><b id="planet-body-type">-</b></div>
+              <div class="kv"><span>Volume</span><b id="planet-volume">-</b></div>
+            </div>
+            <div class="card">
+              <h4 class="card-h"><i class="fas fa-lightbulb c-yellow"></i> Quick Facts</h4>
+              <ul id="planet-facts" class="facts"></ul>
+            </div>
+            <div class="card">
+              <h4 class="card-h"><i class="fas fa-satellite c-blue"></i> Orbital Characteristics</h4>
+              <div class="kv line"><span>Perihelion</span><b id="planet-perihelion">-</b></div>
+              <div class="kv line"><span>Aphelion</span><b id="planet-aphelion">-</b></div>
+              <div class="kv line"><span>Eccentricity</span><b id="planet-eccentricity">-</b></div>
+              <div class="kv line"><span>Inclination</span><b id="planet-inclination">-</b></div>
+              <div class="kv line"><span>Axial Tilt</span><b id="planet-axial-tilt">-</b></div>
+              <div class="kv line"><span>Avg Temperature</span><b id="planet-temp">-</b></div>
+              <div class="kv"><span>Escape Velocity</span><b id="planet-escape">-</b></div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="section-title mt">Planet Comparison</h2>
+        <div class="table-wrap">
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>Planet</th>
+                <th>Distance (AU)</th>
+                <th>Diameter (km)</th>
+                <th>Mass (Earth=1)</th>
+                <th>Orbital Period</th>
+                <th>Moons</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody id="planet-comparison-tbody">
+              <tr><td colspan="7" class="muted center">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="script (1).js"></script>
+  </body>
+</html>
